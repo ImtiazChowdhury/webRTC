@@ -32,6 +32,20 @@ io.on("connection", (socket) => {
             activeUserList
         })
     })
+
+    socket.on("call-user", (callInfo) => {
+        socket.to(callInfo.to).emit("call-request", {
+            offer: callInfo.offer,
+            from: socket.id
+        })
+    })
+
+    socket.on("call-accept", (callInfo) => {
+        socket.to(callInfo.to).emit("call-confirm", {
+            answer: callInfo.answer,
+            from: socket.id
+        })
+    })
 })
 
 
